@@ -26,4 +26,4 @@ Cloudinary (for handling media uploads)
 # Purpose of the Application:
 Learn how to build a modern web application from scratch
 Understand how to integrate frontend and backend technologies
-Gain practical experience with popular development tools and frameworks
+Gain practical experience with popular development tools and frameworks.

@@ -1,0 +1,17 @@
+{
+    "name": "studentblogapp",
+    "version": "1.0.0",
+    "description": "This project is a full-stack blog application for students, built with HTML, CSS, JavaScript, Node.js, Express, and MongoDB. Features include user authentication, post creation, commenting, and liking. It helps students learn full-stack development and backend integration.",
+    "main": "index.js",
+    "scripts": {
+      "dev": "nodemon index.js",
+      "start": "node index.js"
+      },
+      "keywords": ["blog", "student", "full-stack", "nodejs", "mongodb", "express"],
+      "author": "Ehsan",
+      "license": "MIT",
+      "comments": {
+      "devScript": "This uses nodemon to automatically restart the server during development.",
+      "startScript": "This runs the app in production mode using node."
+      }
+  }
