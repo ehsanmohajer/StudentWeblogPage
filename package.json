@@ -22,6 +22,7 @@
         "startScript": "This runs the app in production mode using node."
     },
     "dependencies": {
+        "ejs": "^3.1.10",
         "express": "^4.21.1"
     },
     "devDependencies": {
