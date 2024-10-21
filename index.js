@@ -16,9 +16,25 @@ const register = require('./src/routes/register_route')
 const express = require('express');
 const app = express();
 
-app.set('view engine' , 'ejs')
+/**
+ * use EJS for rendering views
+ */
+app.set('view engine' , 'ejs');
 
+/**
+ * use register route
+ * '/register' is the route for the register page
+ */
 app.use('/register', register);
+
+/**
+ *
+ */
+app.use(express.static(`${__dirname}/src`));
+
+
+
+
 
 // app.get('/',(req, res)=>{
 //     res.send('<h1>Hello, World!</h1>');
