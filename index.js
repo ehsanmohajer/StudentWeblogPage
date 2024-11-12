@@ -1,48 +1,81 @@
-/**
- * @license MIT
- * @copyright 2024 EMK
- */
-
-/**
- * enables strict mode, which helps catch common coding errors and “unsafe” actions.
- */
 'use strict';
 
-const register = require('./src/routes/register_route')
-
-/**
- * add Express module
- */
 const express = require('express');
+require('dotenv').config();
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const compression = require('compression');
+const register = require('./src/routes/register_route');
+const login = require('./src/routes/login_route');
+const { connectDB, disconnectDB } = require('./src/config/mongoose_config');
+const home = require('./src/routes/home_route');
+const createBlog = require('./src/routes/create_blog_route');
+const logout = require('./src/routes/logout_route');
+const userAuth = require('./src/middlewares/user_auth_middleware');
+const blogDetail = require('./src/routes/blog_detail_route');
+const readingList = require('./src/routes/reading_list_route');
+const blogUpdate = require('./src/routes/blog_update_route');
+const profile = require('./src/routes/profile_route');
+const dashboard = require('./src/routes/dashboard_route');
+const deleteBlog = require('./src/routes/blog_delete_route');
+const settings = require('./src/routes/settings_route');
 const app = express();
 
-/**
- * use EJS for rendering views
- */
-app.set('view engine' , 'ejs');
+app.use(compression());
 
-/**
- * use register route
- * '/register' is the route for the register page
- */
+app.set('view engine', 'ejs');
+
+app.use(express.static(`${__dirname}/public`));
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json({ limit: '10mb' }));
+
+const store = new MongoStore({
+  mongoUrl: process.env.MONGO_CONNECTION_URI,
+  collectionName: 'sessions',
+  dbName: 'inktale'
+});
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store,
+  cookie: {
+    maxAge: Number(process.env.SESSION_MAX_AGE)
+  }
+}));
+
 app.use('/register', register);
 
-/**
- *
- */
-app.use(express.static(`${__dirname}/src`));
+app.use('/login', login);
 
+app.use('/logout', logout);
 
+app.use('/', home);
 
+app.use('/blogs', blogDetail);
 
+app.use('/profile', profile);
 
-// app.get('/',(req, res)=>{
-//     res.send('<h1>Hello, World!</h1>');
-// })
+app.use(userAuth);
 
-/**
- * set up the server to listen on port 4000
- */
-app.listen(4000, ()=>{
-    console.log("Server is running on port 4000 http://localhost:4000");
+app.use('/createblog', createBlog);
+
+app.use('/readinglist', readingList);
+
+app.use('/blogs', blogUpdate, deleteBlog);
+
+app.use('/dashboard', dashboard);
+
+app.use('/settings', settings);
+
+const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, async () => {
+  console.log(`Server listening on port http://localhost:${PORT}`);
+
+  await connectDB(process.env.MONGO_CONNECTION_URI);
 });
+
+server.on('close', async () => await disconnectDB())
