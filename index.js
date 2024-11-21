@@ -34,7 +34,7 @@ app.use(express.json({ limit: '10mb' }));
 const store = new MongoStore({
   mongoUrl: process.env.MONGO_CONNECTION_URI,
   collectionName: 'sessions',
-  dbName: 'inktale'
+  dbName: 'blog-app'
 });
 
 app.use(session({
