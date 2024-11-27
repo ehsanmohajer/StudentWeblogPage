@@ -56,17 +56,18 @@ app.use('/blogs', blogUpdate, deleteBlog);
 app.use('/dashboard', dashboard);
 app.use('/settings', settings);
 
-module.exports = async (req, res) => {
-    if (!global.dbConnected) {
-        global.dbConnected = true;
-        await connectDB(process.env.MONGO_CONNECTION_URI);
-    }
-    app(req, res); // Pass the request and response to Express
-};
 
-// const PORT = process.env.PORT || 3000;
-// const server = app.listen(PORT, async () => {
-//   console.log(`Server listening on port http://localhost:${PORT}`);
-//   await connectDB(process.env.MONGO_CONNECTION_URI);
-// });
-// server.on('close', async () => await disconnectDB())
+const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, async () => {
+    console.log(`Server listening on port http://localhost:${PORT}`);
+    await connectDB(process.env.MONGO_CONNECTION_URI);
+});
+server.on('close', async () => await disconnectDB())
+
+// module.exports = async (req, res) => {
+//     if (!global.dbConnected) {
+//         global.dbConnected = true;
+//         await connectDB(process.env.MONGO_CONNECTION_URI);
+//     }
+//     app(req, res); // Pass the request and response to Express
+// };
