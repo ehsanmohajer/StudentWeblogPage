@@ -1,5 +1,4 @@
 'use strict';
-// const { createServer } = require('http');
 const express = require('express');
 require('dotenv').config();
 const session = require('express-session');
@@ -23,13 +22,9 @@ const app = express();
 
 
 app.use(compression());
-
 app.set('view engine', 'ejs');
-
 app.use(express.static(`${__dirname}/public`));
-
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.json({ limit: '10mb' }));
 
 const store = new MongoStore({
@@ -49,34 +44,29 @@ app.use(session({
 }));
 
 app.use('/register', register);
-
 app.use('/login', login);
-
 app.use('/logout', logout);
-
 app.use('/', home);
-
 app.use('/blogs', blogDetail);
-
 app.use('/profile', profile);
-
 app.use(userAuth);
-
 app.use('/createblog', createBlog);
-
 app.use('/readinglist', readingList);
-
 app.use('/blogs', blogUpdate, deleteBlog);
-
 app.use('/dashboard', dashboard);
-
 app.use('/settings', settings);
 
-const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, async () => {
-  console.log(`Server listening on port http://localhost:${PORT}`);
+module.exports = async (req, res) => {
+    if (!global.dbConnected) {
+        global.dbConnected = true;
+        await connectDB(process.env.MONGO_CONNECTION_URI);
+    }
+    app(req, res); // Pass the request and response to Express
+};
 
-  await connectDB(process.env.MONGO_CONNECTION_URI);
-});
-
-server.on('close', async () => await disconnectDB())
+// const PORT = process.env.PORT || 3000;
+// const server = app.listen(PORT, async () => {
+//   console.log(`Server listening on port http://localhost:${PORT}`);
+//   await connectDB(process.env.MONGO_CONNECTION_URI);
+// });
+// server.on('close', async () => await disconnectDB())
