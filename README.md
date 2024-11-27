@@ -1,5 +1,5 @@
 
-# Full-Stack Weblog Application for Students
+# Full-Stack Weblog Application for Students 
 
 This project is a full-featured blog application designed for Full-Stack students at JAMK University. It provides a platform for students to create, share, and engage with blog posts in an interactive environment. For example, a student like Juoni might post about a thesis session, and others can respond with comments or likes.
 
