@@ -13,8 +13,8 @@
       }
     ],
     "functions": {
-    "index.js": {
-      "timeout": 60
-    }
+      "index.js": {
+        "timeout": 60
+      }
     }
   }
