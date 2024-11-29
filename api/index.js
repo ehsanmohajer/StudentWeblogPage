@@ -1,9 +1,9 @@
+require('dotenv').config({ path: `${__dirname}/../.env` });
 const express = require('express');
 const serverless = require('serverless-http');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const compression = require('compression');
-require('dotenv').config();
 
 // Import routes
 const register = require('./routes/register_route');
@@ -22,6 +22,14 @@ const deleteBlog = require('./routes/blog_delete_route');
 const settings = require('./routes/settings_route');
 
 const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
 
 // Middleware
 app.use(compression());
