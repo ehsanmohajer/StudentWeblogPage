@@ -1,4 +1,27 @@
-'use strict';
+const express = require('express');
+const serverless = require('serverless-http');
+const app = express();
+
+// Existing middleware and routes here...
+app.use('/register', register);
+app.use('/login', login);
+app.use('/logout', logout);
+app.use('/', home);
+app.use('/blogs', blogDetail);
+app.use('/profile', profile);
+app.use(userAuth);
+app.use('/createblog', createBlog);
+app.use('/readinglist', readingList);
+app.use('/blogs', blogUpdate, deleteBlog);
+app.use('/dashboard', dashboard);
+app.use('/settings', settings);
+
+module.exports = app;
+module.exports.handler = serverless(app);
+
+
+
+('use strict');
 // const { createServer } = require('http');
 const express = require('express');
 require('dotenv').config();
@@ -21,7 +44,6 @@ const deleteBlog = require('./routes/blog_delete_route');
 const settings = require('./routes/settings_route');
 const app = express();
 
-
 app.use(compression());
 
 app.set('view engine', 'ejs');
@@ -35,42 +57,44 @@ app.use(express.json({ limit: '10mb' }));
 const store = new MongoStore({
   mongoUrl: process.env.MONGO_CONNECTION_URI,
   collectionName: 'sessions',
-  dbName: 'blog-app'
+  dbName: 'blog-app',
 });
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  store,
-  cookie: {
-    maxAge: Number(process.env.SESSION_MAX_AGE)
-  }
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store,
+    cookie: {
+      maxAge: Number(process.env.SESSION_MAX_AGE),
+    },
+  })
+);
 
-app.use('/register', register);
+// app.use('/register', register);
 
-app.use('/login', login);
+// app.use('/login', login);
 
-app.use('/logout', logout);
+// app.use('/logout', logout);
 
-app.use('/', home);
+// app.use('/', home);
 
-app.use('/blogs', blogDetail);
+// app.use('/blogs', blogDetail);
 
-app.use('/profile', profile);
+// app.use('/profile', profile);
 
-app.use(userAuth);
+// app.use(userAuth);
 
-app.use('/createblog', createBlog);
+// app.use('/createblog', createBlog);
 
-app.use('/readinglist', readingList);
+// app.use('/readinglist', readingList);
 
-app.use('/blogs', blogUpdate, deleteBlog);
+// app.use('/blogs', blogUpdate, deleteBlog);
 
-app.use('/dashboard', dashboard);
+// app.use('/dashboard', dashboard);
 
-app.use('/settings', settings);
+// app.use('/settings', settings);
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, async () => {
@@ -79,4 +103,4 @@ const server = app.listen(PORT, async () => {
   await connectDB(process.env.MONGO_CONNECTION_URI);
 });
 
-server.on('close', async () => await disconnectDB())
+server.on('close', async () => await disconnectDB());
