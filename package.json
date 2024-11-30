@@ -2,10 +2,14 @@
     "name": "studentblogapp",
     "version": "1.0.0",
     "description": "This project is a full-stack blog application for students, built with HTML, CSS, JavaScript, Node.js, Express, and MongoDB. Features include user authentication, post creation, commenting, and liking. It helps students learn full-stack development and backend integration.",
+<<<<<<< HEAD
     "main": "index.js",
     "engines": {
         "node": "20.x"
     },
+=======
+    "main": "api/index.js",
+>>>>>>> 0f7ef4dec2ccef8d5abdd064c0754804641f0aba
     "scripts": {
         "dev": "node index.js",
         "start": "node index.js"
@@ -35,7 +39,8 @@
         "express-session": "^1.18.1",
         "highlight.js": "^11.10.0",
         "markdown-it": "^14.1.0",
-        "mongoose": "^8.8.1"
+        "mongoose": "^8.8.1",
+        "serverless-http": "^3.2.0"
     },
     "devDependencies": {
         "nodemon": "^3.1.7"
