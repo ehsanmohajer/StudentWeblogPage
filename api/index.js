@@ -23,9 +23,9 @@ const settings = require('./routes/settings_route');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello, World!');
+// });
 
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
@@ -34,6 +34,10 @@ app.listen(3000, () => {
 // Middleware
 app.use(compression());
 app.set('view engine', 'ejs');
+// Set the path to the views directory
+app.set('views', `${__dirname}/views`);
+console.log('Views directory:', app.get('views'));
+
 app.use(express.static(`${__dirname}/public`));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: '10mb' }));
