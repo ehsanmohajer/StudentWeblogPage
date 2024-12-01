@@ -63,11 +63,3 @@ const server = app.listen(PORT, async () => {
     await connectDB(process.env.MONGO_CONNECTION_URI);
 });
 server.on('close', async () => await disconnectDB())
-
-// module.exports = async (req, res) => {
-//     if (!global.dbConnected) {
-//         global.dbConnected = true;
-//         await connectDB(process.env.MONGO_CONNECTION_URI);
-//     }
-//     app(req, res); // Pass the request and response to Express
-// };
