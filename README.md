@@ -1,6 +1,10 @@
 
 # Full-Stack Weblog Application for Students 
 
+## View the Deployed Version on Vercel
+- You can view the live version of this project hosted on Vercel by visiting: https://student-weblog-page.vercel.app/
+- Feel free to explore and share feedback!
+
 This project is a full-featured blog application designed for Full-Stack students at JAMK University. It provides a platform for students to create, share, and engage with blog posts in an interactive environment. For example, a student like Juoni might post about a thesis session, and others can respond with comments or likes.
 
 ## Key Features
